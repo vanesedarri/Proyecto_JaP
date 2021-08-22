@@ -1,6 +1,17 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
+function iniciarSesion(){
+    let ingreso = false;
+    let usuario = document.getElementById("usu").value;
+    let contrasena = document.getElementById("contras").value;
+    if(usuario != "" & contrasena != ""){
+        ingreso = true;
+    }
+    if(ingreso){
+         irInicio();
+    } else{
+         alert("Por favor ingrese e-mail y contraseña");
+    }
+}
 
-});
+function irInicio(){
+    window.location("inicio.html")
+}
