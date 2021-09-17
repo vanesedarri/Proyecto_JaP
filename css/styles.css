@@ -56,7 +56,7 @@ footer p {
 
 .site-header a {
   color: white;
-  transition: ease-in-out color .15s;
+  transition:ease-in-out color .15s;
 }
 
 .light-text {
@@ -132,8 +132,8 @@ footer p {
 
 a.custom-card,
 a.custom-card:hover {
-  color: inherit;
-  text-decoration: inherit;
+  color: darkred;
+  text-decoration: darkred;
 }
 
 .checked {

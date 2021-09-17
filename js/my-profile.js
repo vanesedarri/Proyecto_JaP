@@ -2,5 +2,10 @@
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
-
+    let user_name= sessionStorage.getItem("user");
+    if(user_name == undefined){
+        window.location.href = "index.html"
+    }else{
+        document.getElementById("welcome").innerHTML = "Hola " + user_name;
+    }
 });
