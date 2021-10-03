@@ -23,8 +23,15 @@
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <a class="py-2 d-none d-md-inline-block" href="my-profile.html" id="welcome"></a>
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="welcome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+          <a class="dropdown-item" href="cart.html">Mi carrito</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="index.html">Cerrar sesión</a>
+      </div>
+      </div>
     </div>
   </nav>
   <main role="main">
@@ -60,7 +67,25 @@
 
         <dt>Imágenes ilustrativas</dt>
         <dd>
-          <div class="row text-center text-lg-left pt-2" id="productImagesGallery">
+          <div class="row text-center justify-content-center text-lg-left pt-2" id="pruebocarrusel">
+            
+            <div class="container col-md-8">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators" id="indicador">
+              </ol>
+              <div class="carousel-inner col-sm" id="items">
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            </div>
+            
           </div>
         </dd>
 
@@ -85,19 +110,19 @@
         <dt>Agregar Comentario</dt>
         <hr class="my-3">
         <dd>
-          <form name="comentar" action="./product-info.html">
-              <textarea name="textarea" id="writeComment" rows="5" cols="80" placeholder="Agregar comentario"></textarea>
+          <form name="comentar">
+              <textarea name="textarea" id="writeComment" rows="5" cols="80" placeholder="Ingrese su comentario"></textarea>
               <p>Puntuación</p>
+              
               <p><select class="form-select" id="selectScore">
-              <option selected>Seleccionar</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-              <option value="5">5</option>
+              <option selected value="5">5</option>
               </select></p>
-              <p><button class="btn btn-danger" type="submit" onclick="saveComments()">Comentar</button></p>
-          </form>
+            </form>
+            <p><button class="btn btn-danger" type="button" onclick="saveComments()">Comentar</button></p>
           <div class="row text-center text-lg-left pt-2" id="addComment">
           </div>
         </dd>

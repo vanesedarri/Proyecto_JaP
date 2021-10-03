@@ -1,33 +1,49 @@
 var product = {};
+var commentsArray = {};
 
+//Mostrar la galeria de imagenes del Chevrolet Onix Joy
 function showImagesGallery(array){
 
     let htmlContentToAppend = "";
+    let htmlContentToAppend2 = "";
 
     for(let i = 0; i < array.length; i++){
         let imageSrc = array[i];
 
+        if(i==0){
         htmlContentToAppend += `
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="` + imageSrc + `" alt="">
-            </div>
-        </div>
+        <div class="carousel-item active">
+                  <img src="${imageSrc}" class="d-block w-100" alt="">
+                </div>
         `
-
-        document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
+        htmlContentToAppend2 +=`
+        <li data-target="#carouselExampleIndicators" data-slide-to="${i}" class="active"></li>
+        `
+        }else{
+            htmlContentToAppend += `
+            <div class="carousel-item">
+                      <img src="${imageSrc}" class="d-block w-100" alt="">
+                    </div>
+            `  
+            htmlContentToAppend2 +=`
+        <li data-target="#carouselExampleIndicators" data-slide-to="${i}"></li>
+        `
+        }
+        document.getElementById("items").innerHTML = htmlContentToAppend;
+        document.getElementById("indicador").innerHTML = htmlContentToAppend2;
     }
 }
 
 
-function showRelatedProducts(array){
+//Mostrar los productos relacionados
+function showRelatedProducts(list){
 
-    let htmlContentToAppend2 = "";
+    let htmlContentToAppend = "";
 
-    for(let valor of array){
+    for(let valor of list){
         let relatedProduct = products[valor];
 
-        htmlContentToAppend2 += `
+        htmlContentToAppend += `
         <div class="card col-md-3">
                   <img class=" img-thumbnail card-img-top" src="` + relatedProduct.imgSrc + `" alt="">      
                   <div class="card-body">
@@ -38,17 +54,17 @@ function showRelatedProducts(array){
         </div>
         `        
 
-        document.getElementById("relatedProducts").innerHTML = htmlContentToAppend2;
+        document.getElementById("relatedProducts").innerHTML = htmlContentToAppend;
     }
 }
 
-
+//Mostrar los comentarios del JSON
 function comments(currentCommentsArray){
-    let htmlContentToAppend3 = "";
+    let htmlContentToAppend = "";
     for(let i = 0; i < currentCommentsArray.length; i++){
         let comment = currentCommentsArray[i];
 
-        htmlContentToAppend3 += `
+        htmlContentToAppend += `
                     <li class="list-group-item list-group-item-danger d-flex w-100 justify-content-between">
                         <p><strong>` + comment.user + `</strong></p>
                         <p>` + comment.dateTime + ` | `+ showScore(comment.score) +`</p>
@@ -56,40 +72,52 @@ function comments(currentCommentsArray){
                         <p>` + comment.description + `</p>
             `
 
-        document.getElementById("comments").innerHTML = htmlContentToAppend3;
+        document.getElementById("comments").innerHTML = htmlContentToAppend;
     }  
 }
 
+//Mostrar la puntuacion en formato de estrellas
 function showScore(score){
     let stars="";
     for (let i = 0; i < score; i++) {
-        stars += `<span class="fa fa-star checked"></span>;`
+        stars += `<span class="fa fa-star checked"></span>`
     }
     for (let i = score; i < 5; i ++) {
-        stars += `<span class="fa fa-star"></span>;`     
+        stars += `<span class="fa fa-star"></span>`     
     }
     return stars;
 }
 
+//Guardar nuevos comentarios
 function saveComments(){
     var score = document.getElementById("selectScore").value;
-    sessionStorage.setItem("stars", score);
-    var description = document.getElementById("writeComment").value;
-    sessionStorage.setItem("comment", description);
-}
 
-function addComments(array){
-    let numberStars= sessionStorage.getItem("stars");
-    let writing= sessionStorage.getItem("comment");
+    var description = document.getElementById("writeComment").value;
+
+    //Fecha actual
+    var fecha = new Date();
+    var año = fecha.getFullYear();
+    var mes = fecha.getMonth();
+    var mesReal = mes + 1;
+    var dia = fecha.getDate();
+    var hora = fecha.getHours();
+    var minutos = fecha.getMinutes();
+    var segundos = fecha.getSeconds();
+    var time = año + "-" + mesReal + "-" + dia + " " + hora + ":" + minutos + ":" + segundos;
+
     let user_name= sessionStorage.getItem("user");
     let newComment = {
-        "score": numberStars,
-        "description": writing,
+        "score": score,
+        "description": description,
         "user": user_name,
-        "dateTime": ""
-    }
-    array.push(newComment);
+        "dateTime": time
+    };
+    commentsArray.push(newComment);
+    document.getElementById("writeComment").value = "";
+    comments(commentsArray);
 }
+
+
 
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -115,9 +143,6 @@ document.addEventListener("DOMContentLoaded", function(e){
 
             //Muestro las imagenes en forma de galería
             showImagesGallery(product.images);
-
-            //Agrego el comentario
-            //addComments(product);
         }
        getJSONData(PRODUCTS_URL).then(function(resultObj){
         if (resultObj.status === "ok")
@@ -131,7 +156,9 @@ document.addEventListener("DOMContentLoaded", function(e){
         getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
         if (resultObj.status === "ok")
         {
-            comments(resultObj.data);
+            //Muestro los comentarios cargados en el JSON
+            commentsArray = resultObj.data;
+            comments(commentsArray);
         } 
         });
     });
