@@ -27,6 +27,7 @@
         font-size: 3.5rem;
       }
     }
+
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
@@ -44,21 +45,132 @@
         <button class="btn btn-dark dropdown-toggle" type="button" id="welcome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-          <a class="dropdown-item" href="cart.html">Mi carrito</a>
+          <a class="dropdown-item" href="cart.html">Mi carrito <span class="prodCarrito"></span></a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="index.html">Cerrar sesión</a>
       </div>
       </div>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 17/10/2021) y Entrega 7 (Fecha de entrega: 14/11/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  
+  <main role="main" class="pb-5">
+    <div class="text-danger text-center p-4">
+        <h2>Mi Carrito</h2>
+        <p class="lead">Verás aquí todos los productos de tu carrito.</p>
     </div>
-  </div>
+    
+    <div class="container col-md-8">
+      <h3>Carrito <span id="prodCarrito"></span></h3>
+    
+      <table class="table table-hover">
+        <thead class="table-danger">
+          <tr><th>Producto</th> <th>Costo unitario</th> <th>Cantidad</th> <th>Subtotal</th> <th></th></tr>
+        </thead>
+        <tbody id="carrito">
+        </tbody>
+      </table>
+      <hr class="my-3">
+
+      <h4>Método de Envío</h4>
+      <h6>Dirección de envío</h6>
+
+      <form class="row g-3">
+        <div class="input-group mb-3 col-auto">
+          <span class="input-group-text input-danger" id="calle" required>Calle</span>
+          <input type="text" class="form-control">
+          <span class="input-group-text" id="numero" required>Número</span>
+          <input type="text" class="form-control">
+          <span class="input-group-text" id="esquina" required>Esquina</span>
+          <input type="text" class="form-control">
+        </div>
+      </form>
+      <hr class="mb-4">
+
+
+            <h6>Tipo de Envío</h6>
+            <div class="d-block my-3">
+            <div class="custom-control custom-radio"> 
+              <input onchange="envio()" id="premium" name="tipoEnvio" class="custom-control-input" type="radio"  required>
+              <label class="custom-control-label" for="premium">
+                Premium 2-5 días (15%)
+              </label>
+            </div>
+            
+              <div class="custom-control custom-radio"> 
+                <input onchange="envio()" id="express" name="tipoEnvio" class="custom-control-input" type="radio"  required>
+                <label class="custom-control-label" for="express">
+                  Express 5 a 8 días (7%)
+                </label>
+              </div>
+              <div class="custom-control custom-radio"> 
+                <input onchange="envio()" id="standard" name="tipoEnvio" class="custom-control-input" type="radio"  required>
+                <label class="custom-control-label" for="standard">
+                  Standard 12 a 15 días (5%)
+                </label>
+              </div>
+              <hr class="mb-4">
+
+
+              <h4>Costos</h4>
+              <div class="list-group-item list-group-item-danger">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex w-100 text-right justify-content-between">
+                          <h6>Subtotal:</h6>
+                          <h6>UYU <span id="subtotal"></span></h6>
+                        </div>
+                    </div>
+                </div>
+              </div>
+                <div class="list-group-item">
+                <div class="row">
+                  <div class="col">
+                      <div class="d-flex w-100 text-right justify-content-between">
+                        <h6>Costo de envío:</h6>
+                        <h6>UYU <span id="envio"></span></h6>
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div class="list-group-item list-group-item-danger">
+                <div class="row">
+                  <div class="col">
+                      <div class="d-flex w-100 text-right justify-content-between">
+                        <h6>Total:</h6>
+                        <h6>UYU <span id="total"></span></h6>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="mb-4">
+
+
+              <h4>Forma de pago</h4>
+              <p>No ha seleccionado</p>
+
+              
+              <table>
+                <tbody>
+                  <tr><td><button type="button" class="btn btn-danger" onclick="compra()">Finalizar compra</button></td></tr>
+                  <tr><td><a href="products.html">Seguir comprando</a></td></tr>
+                </tbody>
+              </table>
+              
+       
+              </div>
+    </div>
+    
+  </main>
+
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
