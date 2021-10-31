@@ -17,7 +17,7 @@ function showCarrito(){
                 <td class="precioUnitario">${pesos}</td>
                 <td><input class="cantidades" type="number" min="1" value="${cart.articles[i].count}" onchange='subtotal()' style="width:70px"></td> 
                 <td id='res${i}'></td>
-                <td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td></tr>
+                <td><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i> Eliminar</button></td></tr>
                 `
             }
             document.getElementById('prodCarrito').innerHTML=titulo;

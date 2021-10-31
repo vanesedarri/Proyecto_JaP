@@ -36,14 +36,24 @@
   </style>
 </head>
 
-<body class="text-center">
+<body>
+  <div class="container col-md-6">
   <img src="img/login.png" width="700" height="250">
-  <h2 id="please">Por favor, inicia sesión</h2>
+  </div>
+  <div class="container col-md-4">
+  <h2 class="text-center" id="please">Por favor, inicia sesión</h2>
   <form name="datos" action="./inicio.html">
-      <p>Usuario: <input id="usu" type="text" name="usuario" placeholder="Escriba su usuario" required></p>
-      <p>Contraseña: <input id="contras" type="password" name="contra" placeholder="Escriba su contraseña" required></p>
-      <p><input type="checkbox" value="remember">Recordar nombre de usuario</p>
-      <p><button class="boton" type="submit" onclick="bienvenida()">Iniciar sesión</button></p>
+    <div class="mb-3">
+      <label for="usuario" class="form-label">Usuario</label>
+      <input type="text" class="form-control" id="usu" placeholder="Escriba su usuario" required>
+    </div>
+    <div class="mb-3">
+      <label for="contra" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="contras" placeholder="Escriba su contraseña" required>
+    </div>
+      <p><input type="checkbox" value="remember"> Recordar nombre de usuario</p>
+      <p class="text-center"><button class="btn btn-primary" type="submit" onclick="bienvenida()">Iniciar sesión</button></p>
+    </div>
   </form>
 
   <script src="js/init.js"></script>

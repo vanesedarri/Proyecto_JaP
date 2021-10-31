@@ -48,25 +48,25 @@ function showProductsList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
 
             htmlContentToAppend += `
-            <a href="product-info.html" class="list-group-item list-group-item-danger">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail" >
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">`+ product.name +`</h4>
-                            <small class="text-muted">` + product.soldCount + ` Vendidos </small>
-                        </div>
-                        <p class="mb-1">` + product.description + `</p>
-                        <h5> `+ product.currency + ` ` + product.cost +` </h5>
-                    </div>
-                </div>
-            </a>
+            <div class="col-md-4">
+            <div class="card border-danger mb-4 shadow-sm">
+            <img src="${product.imgSrc}" style="max-width:100%;height:auto;" class="card-img-top" alt="...">
+            <div class="card-body">             
+              <div class="d-flex justify-content-between w-100">
+                <h5 class="card-title">${product.name}</h5>
+                <small class="text-muted">` + product.soldCount + ` Vendidos </small>
+              </div>
+              <p class="card-text">${product.description}</p>
+              <h5> `+ product.currency + ` ` + product.cost +` </h5>
+              <a href="product-info.html" class="btn btn-danger">Ver info</a>
+            </div>
+            </div>
+            </div>
+
             `
         }
 
-        document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+        document.getElementById("cat-card-container").innerHTML = htmlContentToAppend;
     }
 }
 
