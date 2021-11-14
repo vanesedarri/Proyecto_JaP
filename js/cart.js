@@ -1,5 +1,5 @@
 function showCarrito(){
-    let productCart = "";
+    let productCart = [];
     let titulo ="";
 
             for (let i=0; i < cart.articles.length; i++){
@@ -15,9 +15,9 @@ function showCarrito(){
                 productCart += `<tr>
                 <td><img src="${cart.articles[i].src}" style="width:100px" alt=""> ${cart.articles[i].name}</td>
                 <td class="precioUnitario">${pesos}</td>
-                <td><input class="cantidades" type="number" min="1" value="${cart.articles[i].count}" onchange='subtotal()' style="width:70px"></td> 
+                <td><form class="was-validated"><input class="cantidades form-control" required type="number" min="1" value="${cart.articles[i].count}" onchange='subtotal()' style="width:90px"></form></td> 
                 <td id='res${i}'></td>
-                <td><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i> Eliminar</button></td></tr>
+                <td><button type="button" id='eliminar${i}' onclick='eliminarItem(${i})' class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i> Eliminar</button></td></tr>
                 `
             }
             document.getElementById('prodCarrito').innerHTML=titulo;
@@ -65,7 +65,76 @@ function envio(){
 }
 
 function compra(){
-    alert("Tu compra se realizó con éxito!");
+    let totalCant = 0;
+    let calle = document.getElementById("calle").value;
+    let numero = document.getElementById("numero").value;
+    let esquina = document.getElementById("esquina").value;
+    let cantidades = document.getElementsByClassName('cantidades');
+    for (let i = 0; i < cantidades.length; i++) {
+
+       totalCant += parseFloat(cantidades[i].value);
+    }
+    if (totalCant ==0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay productos seleccionados a comprar!',
+          })
+    } else if (calle==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Agregar Calle en Dirección de Envío!',
+          })
+    } else if (numero==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Agregar Número en Dirección de Envío!',
+          })
+    } else if (esquina==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Agregar Esquina en Dirección de Envío!',
+          })
+    } else if ((document.getElementById("premium").checked == false) && (document.getElementById("express").checked == false) && (document.getElementById("standard").checked == false)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe seleccionar un Tipo de Envío!',
+          })
+    } else if (document.getElementById("formaDePago").innerHTML==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe seleccionar una Forma de Pago!',
+          })
+    }else{
+        Swal.fire({
+            icon: 'success',
+            title: 'Su compra se ha realizado con éxito!',
+          })
+    }
+    
+}
+
+function formaPagar(){
+    if (document.getElementById("tarjetaCredito").checked) {
+        document.getElementById("formaDePago").innerHTML = `Tarjeta de crédito`;
+        document.getElementById("seleccionFormaPago").innerHTML = `Editar forma de pago`;
+    }else if (document.getElementById("transferencia").checked) {
+        document.getElementById("formaDePago").innerHTML = `Transferencia bancaria`;
+        document.getElementById("seleccionFormaPago").innerHTML = `Editar forma de pago`;
+    }
+    
+}
+
+function eliminarItem(item){
+    cart.articles.splice(item, 1);
+    showCarrito();
+    subtotal();
+
 }
 
 
@@ -81,5 +150,17 @@ document.addEventListener("DOMContentLoaded", function(e){
             showCarrito();
             
         }
+    });
+    document.getElementById("tarjetaCredito").addEventListener('click',()=>{
+        document.getElementById("numTarjeta").disabled = false;
+        document.getElementById("codigoSeg").disabled = false;
+        document.getElementById("vencimiento").disabled = false;
+        document.getElementById("numCuenta").disabled = true;
+    });
+    document.getElementById("transferencia").addEventListener('click',()=>{
+        document.getElementById("numTarjeta").disabled = true;
+        document.getElementById("codigoSeg").disabled = true;
+        document.getElementById("vencimiento").disabled = true;
+        document.getElementById("numCuenta").disabled = false;
     });
 });

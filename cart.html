@@ -33,6 +33,7 @@
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="sweet/sweetalert2.css">
 </head>
 
 <body>
@@ -52,10 +53,10 @@
       <div class="navbar-brand dropdown">
         <button class="btn btn-dark dropdown-toggle" type="button" id="welcome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-          <a class="dropdown-item" href="cart.html">Mi carrito <span class="prodCarrito"></span></a>
+          <a class="dropdown-item" href="my-profile.html"><i class="fa fa-user-circle fa-lg"></i> Mi perfil</a>
+          <a class="dropdown-item" href="cart.html"><i class="fa fa-shopping-cart fa-lg"></i> Mi carrito <span class="prodCarrito"></span></a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="index.html">Cerrar sesión</a>
+          <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-lg"></i> Cerrar sesión</a>
       </div>
     </div>
   </div>
@@ -82,20 +83,21 @@
       <h4>Método de Envío</h4>
       <h6>Dirección de envío</h6>
 
-      <form class="row g-3">
+      <form class="row g-3 was-validated">
         <div class="input-group mb-3 col-auto">
-          <span class="input-group-text input-danger" id="calle" required>Calle</span>
-          <input type="text" class="form-control">
-          <span class="input-group-text" id="numero" required>Número</span>
-          <input type="text" class="form-control">
-          <span class="input-group-text" id="esquina" required>Esquina</span>
-          <input type="text" class="form-control">
+          <span class="input-group-text input-danger">Calle</span>
+          <input type="text" id="calle" class="form-control" required>
+          <span class="input-group-text">Número</span>
+          <input type="text" id="numero" class="form-control" required>
+          <span class="input-group-text">Esquina</span>
+          <input type="text" id="esquina" class="form-control" required>
         </div>
       </form>
       <hr class="mb-4">
 
 
             <h6>Tipo de Envío</h6>
+            <form class="was-validated">
             <div class="d-block my-3">
             <div class="custom-control custom-radio"> 
               <input onchange="envio()" id="premium" name="tipoEnvio" class="custom-control-input" type="radio"  required>
@@ -103,7 +105,6 @@
                 Premium 2-5 días (15%)
               </label>
             </div>
-            
               <div class="custom-control custom-radio"> 
                 <input onchange="envio()" id="express" name="tipoEnvio" class="custom-control-input" type="radio"  required>
                 <label class="custom-control-label" for="express">
@@ -116,7 +117,8 @@
                   Standard 12 a 15 días (5%)
                 </label>
               </div>
-              <hr class="mb-4">
+            </form>
+            <hr class="mb-4">
 
 
               <h4>Costos</h4>
@@ -154,7 +156,64 @@
 
 
               <h4>Forma de pago</h4>
-              <p>No ha seleccionado</p>
+              <button type="button" class="btn btn-danger" data-toggle="modal" id="seleccionFormaPago" data-target="#exampleModal">
+                No ha seleccionado
+              </button>
+              <p id="formaDePago"></p>
+              
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Forma de pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="formaPago" id="tarjetaCredito" value="option1" required>
+                      <label class="form-check-label" for="exampleRadios1">Tarjeta de crédito</label>
+                    </div>
+                    <hr class="my-3">
+                    <form class="row g-3 was-validated">
+                      <div class="mb-3 col-auto">
+                          <label for="numTarj" class="form-label">Número de tarjeta</label>
+                          <input type="text" class="form-control" required id="numTarjeta" placeholder="XXXX XXXX XXXX XXXX">
+                          <div class="invalid-feedback">Ingrese el número de su tarjeta</div> 
+                      </div>
+                      <div class="mb-3 col-auto">
+                          <label for="codigo" class="form-label">Código de seg.</label>
+                          <input type="text" class="form-control" required id="codigoSeg" placeholder="CVV">
+                          <div class="invalid-feedback">Ingrese el código al dorso de su tarjeta</div>
+                      </div>
+                      <div class="mb-3 col-auto">
+                          <label for="venci" class="form-label">Vencimiento</label>
+                          <input type="text" class="form-control" required id="vencimiento" placeholder="MM/AA">
+                          <div class="invalid-feedback">Ingrese fecha de vencimiento con el formato MM/AA</div>
+                      </div>
+                    </form>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="formaPago" id="transferencia" value="option2" required>
+                      <label class="form-check-label" for="exampleRadios2">Transferencia bancaria</label>
+                    </div>
+                    <hr class="my-3">
+                    <form class="row g-3 was-validated">
+                      <div class="mb-3 col-auto">
+                        <label for="numCuenta" class="form-label">Número de cuenta</label>
+                          <input type="text" class="form-control" required id="numCuenta" placeholder="XXXXXXXXX-XXXXX">
+                          <div class="invalid-feedback">Ingrese su número de cuenta</div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="formaPagar()">Guardar cambios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-3">
 
               
               <table>
@@ -193,6 +252,7 @@
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/user.js"></script>
+  <script src="sweet/sweetalert2.min.js"></script>
 </body>
 
 </html>
